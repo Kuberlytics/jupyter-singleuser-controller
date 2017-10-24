@@ -1,5 +1,8 @@
 FROM jupyter/base-notebook:ae885c0a6226
-RUN pip install --no-cache jupyterhub==0.8
+ARG JUPYTERHUB_VERSION=0.8
+ARG HELM_VERSION=2.6.1
+
+RUN pip install --no-cache jupyterhub==$JUPYTERHUB_VERSION
 
 USER root
 RUN apt-get update
@@ -17,7 +20,7 @@ RUN mv ./kubectl /usr/local/bin/kubectl
 RUN curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > /tmp/get_helm.sh
 RUN chmod 700 /tmp/get_helm.sh
 RUN ls /tmp
-RUN /tmp/get_helm.sh
+RUN /tmp/get_helm.sh --version v$HELM_VERSION
 
 
 
